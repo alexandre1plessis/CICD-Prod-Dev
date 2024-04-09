@@ -26,7 +26,7 @@ jobs:
           name: java-app
           path: '${{ github.workspace }}/target/*.jar'
 
-  deploy:
+  prod:
     runs-on: windows-latest
     needs: build
     environment:
@@ -46,4 +46,26 @@ jobs:
           app-name: 'CICD-production'
           slot-name: 'Production'
           publish-profile: ${{ secrets.prod }}
+          package: '*.jar'
+
+  dev:
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'Developp'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: java-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'CICD-developp'
+          slot-name: 'Developp'
+          publish-profile: ${{ secrets.dev }}
           package: '*.jar'
