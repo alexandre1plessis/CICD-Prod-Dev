@@ -66,6 +66,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'CICD-developp'
-          slot-name: 'Developp'
+          slot-name: 'Production'
           publish-profile: ${{ secrets.dev }}
           package: '*.jar'
