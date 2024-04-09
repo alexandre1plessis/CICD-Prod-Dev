@@ -43,7 +43,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'tarace'
+          app-name: 'CICD-production'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.public }}
+          publish-profile: ${{ secrets.prod }}
           package: '*.jar'
