@@ -1,5 +1,5 @@
 
-name: Build and deploy 
+name: Build and deploy (Prod & Dev)
 
 on:
   
@@ -34,13 +34,13 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact from build job to prd
         uses: actions/download-artifact@v3
         with:
           name: java-app
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+      - name: Deploy to prod
+        id: prod-deploy
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'CICD-production'
@@ -56,13 +56,13 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact from build job to dev
         uses: actions/download-artifact@v3
         with:
           name: java-app
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+      - name: Deploy to dev
+        id: dev-deploy
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'CICD-developp'
